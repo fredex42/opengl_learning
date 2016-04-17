@@ -16,12 +16,17 @@ AC_PROG_CC
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
+AC_LANG_PUSH([C++])
 AC_CHECK_HEADERS([GL/glew.h],[],[AC_MSG_ERROR([You need to install the development files for GLEW. On Debian-style distros this is libglew-dev])])
-AC_CHECK_HEADERS([GLFW/glfw.h],[],[AC_MSG_ERROR([You need to install the development files for GLFW])]))
-AC_CHECK_HEADERS([glm/glm.hpp],[],[AC_MSG_ERROR([You need to install the glm header files package])]))
+AC_CHECK_HEADERS([GL/glfw.h],[found_glfw_header=yes; break;])
+AC_CHECK_HEADERS([GLFW/glfw.h],[found_glfw_header=yes; break;])
+AS_IF([test "x$found_glfw_header" != "xyes"],[AC_MSG_ERROR[You need to install the development files for GLFW. On Debian-style distros this is libglfw-dev]])
+
+AC_CHECK_HEADERS([glm/glm.hpp],[],[AC_MSG_ERROR([You need to install the glm header files package. On Debian-style distros this is libglm-dev])]))
 AC_CHECK_HEADERS([glm/gtc/matrix_transform.hpp],[],[AC_MSG_ERROR([You need to install the glm header files package])]))
 AC_CHECK_HEADERS([glm/gtx/transform.hpp],[],[AC_MSG_ERROR([You need to install the glm header files package])]))
 
+AC_LANG_POP([C++])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
 
