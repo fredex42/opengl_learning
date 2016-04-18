@@ -4,6 +4,7 @@ configure
 config.status
 config.h
 aclocal.m4
+Makefile
 Makefile.in
 stamp-h1
 .deps

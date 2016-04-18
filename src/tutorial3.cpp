@@ -38,7 +38,20 @@ int main(int argc,char *argv[]){
 		return -1;
 	}
 
-	GLuint programID = LoadShaders("SimpleVertexShader2.vertexshader","SimpleFragmentShader.fragmentshader");
+	GLuint programID;
+
+	try {
+		 programID = LoadShaders("SimpleVertexShader.vertexshader","SimpleFragmentShader.fragmentshader");
+	} catch(const char *param){
+		std::cerr << "Shaders not found in default location. Trying src/..." << std::endl;
+		try{
+			programID = LoadShaders("src/SimpleVertexShader.vertexshader","src/SimpleFragmentShader.fragmentshader");
+		} catch(const char *param){
+			std::cerr << param << std::endl;
+			return -1;
+		}
+	}
+
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
