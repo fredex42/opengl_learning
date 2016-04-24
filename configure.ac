@@ -22,7 +22,7 @@ case $host_os in
         # Do something specific for mac
         LDFLAGS="-framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo ${LDFLAGS}"
         ;;
-  linux*)
+  linux* )
         # Do something specific for linux
         ;;
    *BSD*)
@@ -36,8 +36,8 @@ esac
 AC_CHECK_HEADER([stdlib.h])
 AC_LANG_PUSH([C++])
 AC_CHECK_HEADER([GL/glew.h],[],[AC_MSG_ERROR([You need to install the development files for GLEW. On Debian-style distros this is libglew-dev])])
-AC_CHECK_HEADER([GL/glfw.h],[found_glfw_header=yes; break;])
-AC_CHECK_HEADER([GLFW/glfw3.h],[found_glfw_header=yes; break;])
+#AC_CHECK_HEADER([GL/glfw.h],[AC_DEFINE([HAVE_GLFW_H],[1],[Debian-syle GLFW header]) found_glfw_header=yes; break;])
+AC_CHECK_HEADER([GLFW/glfw3.h],[AC_DEFINE([HAVE_GLFW3_H],[1],[Mac-stype GLFW header]) found_glfw_header=yes; break;])
 AS_IF([test "x$found_glfw_header" != "xyes"],[AC_MSG_ERROR([You need to install the development files for GLFW. On Debian-style distros this is libglfw-dev])])
 
 AC_CHECK_HEADER([glm/glm.hpp],[],[AC_MSG_ERROR([You need to install the glm header files package. On Debian-style distros this is libglm-dev])])
@@ -49,8 +49,8 @@ AC_LANG_POP([C++])
 AC_CHECK_HEADER_STDBOOL
 
 # Checks for library functions.
-AC_SEARCH_LIBS([glewInit],[glew],[],[AC_MSG_ERROR([You need to install the development files for GLEW])])
-AC_SEARCH_LIBS([glfwInit],[glfw glfw3],[],[AC_MSG_ERROR([You need to install the development files for GLFW])])
-AC_SEARCH_LIBS([glClear],[gl],[],[AC_MSG_ERROR([You need to install the development files for OpenGL])])
+AC_SEARCH_LIBS([glewInit],[glew GLEW],[],[AC_MSG_ERROR([You need to install the development files for GLEW])])
+AC_SEARCH_LIBS([glfwInit],[glfw3],[],[AC_MSG_ERROR([You need to install the development files for GLFW])],[-lX11 -ldl])
+AC_SEARCH_LIBS([glClear],[GL],[],[AC_MSG_ERROR([You need to install the development files for OpenGL])])
 
 AC_OUTPUT
