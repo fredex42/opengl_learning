@@ -11,6 +11,7 @@ AC_CONFIG_FILES([Makefile])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+CFLAGS="-Isrc/ ${CFLAGS}"
 
 # Checks for libraries.
 #AS_IF([test "x$(uname -s)" == "xDarwin"],[LDFLAGS="-framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo ${LDFLAGS}"])
@@ -50,7 +51,7 @@ AC_CHECK_HEADER_STDBOOL
 
 # Checks for library functions.
 AC_SEARCH_LIBS([glewInit],[glew GLEW],[],[AC_MSG_ERROR([You need to install the development files for GLEW])])
-AC_SEARCH_LIBS([glfwInit],[glfw3],[],[AC_MSG_ERROR([You need to install the development files for GLFW])],[-lX11 -ldl])
+AC_SEARCH_LIBS([glfwInit],[glfw3],[],[AC_MSG_ERROR([You need to install the development files for GLFW])],[-lX11 -ldl -lm -lpthread -lrt -lXrandr -lXinerama -lXcursor])
 AC_SEARCH_LIBS([glClear],[GL],[],[AC_MSG_ERROR([You need to install the development files for OpenGL])])
-
+LIBS="-lX11 -ldl -lm -lpthread -lrt -lXrandr -lXinerama -lXcursor $LIBS"
 AC_OUTPUT
